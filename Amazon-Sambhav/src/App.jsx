@@ -1,90 +1,189 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 
-const modules = [
+const sections = [
   {
-    id: 1,
-    icon: "📦",
-    title: "Eco-Friendly Packaging",
-    about: "Discover sustainable packaging options tailored to your business needs.",
-    image: "https://via.placeholder.com/400x200",
-    details: "Connect with certified suppliers to source biodegradable or recyclable packaging that lowers your carbon footprint."
-  },
-  {
-    id: 2,
-    icon: "🚚",
-    title: "Smart Logistics Optimizer",
-    about: "Optimize shipping routes to minimize emissions and save costs.",
-    image: "https://via.placeholder.com/400x200",
-    details: "Leverage real-time logistics data to choose carbon-saving routes and green shipping partners."
-  },
-  {
-    id: 3,
-    icon: "🌍",
+    id: "carbon-calculator",
     title: "Carbon Footprint Calculator",
-    about: "Track and analyze emissions across your operations.",
-    image: "https://via.placeholder.com/400x200",
-    details: "Assess lifecycle emissions, including raw materials, shipping, and disposal, to identify areas for improvement."
+    description: "Assess carbon emissions for your products and track environmental impact.",
+    emoji: "🌍",
+    about: `
+      Our Carbon Footprint Calculator helps you measure the carbon emissions of your products throughout their lifecycle. 
+      By understanding your impact, you can identify areas to reduce emissions and adopt more sustainable practices. 
+      Key features include real-time data tracking, benchmarking, and actionable insights to reduce your environmental footprint.
+    `,
+    color: "#2e7d32",
   },
   {
-    id: 4,
-    icon: "♻️",
-    title: "Product Recyclability",
-    about: "Help customers and businesses manage end-of-life product recycling.",
-    image: "https://via.placeholder.com/400x200",
-    details: "Provide recyclability insights, badges, and disposal recommendations for every product."
+    id: "packaging-optimizer",
+    title: "Eco-Friendly Packaging Optimizer",
+    description: "Find and switch to sustainable packaging options effortlessly.",
+    emoji: "📦",
+    about: `
+      The Eco-Friendly Packaging Optimizer helps businesses transition to sustainable packaging materials.
+      It provides recommendations based on your specific product dimensions, weight, and shipping needs. 
+      Reduce waste and appeal to eco-conscious customers with innovative, biodegradable, or recyclable packaging solutions.
+    `,
+    color: "#4caf50",
   },
   {
-    id: 5,
-    icon: "⭐",
-    title: "Sustainability Rewards",
-    about: "Earn rewards for sustainable actions.",
-    image: "https://via.placeholder.com/400x200",
-    details: "Redeem points for discounts, carbon credits, or premium features by implementing green initiatives."
-  }
+    id: "logistics-optimizer",
+    title: "Smart Logistics Optimizer",
+    description: "Optimize delivery routes and minimize carbon emissions with AI-powered tools.",
+    emoji: "🚛",
+    about: `
+      Our Smart Logistics Optimizer leverages AI and machine learning to optimize your delivery routes.
+      By minimizing transportation distances and maximizing vehicle capacity, you save on costs and significantly reduce your emissions. 
+      The tool integrates seamlessly with existing logistics software for real-time route adjustments.
+    `,
+    color: "#ff9800",
+  },
+  {
+    id: "recyclability-tool",
+    title: "Product Recyclability Tool",
+    description: "Learn how recyclable your products are and display EcoBadges to customers.",
+    emoji: "♻️",
+    about: `
+      With the Product Recyclability Tool, you can analyze your product's recyclability and highlight this to consumers.
+      Gain access to detailed reports on recyclable components and suggestions for improving product design to align with circular economy principles. 
+      Showcase EcoBadges on your site to build trust with sustainability-focused customers.
+    `,
+    color: "#3f51b5",
+  },
+  {
+    id: "supplier-network",
+    title: "Sustainable Supplier Network",
+    description: "Connect with verified suppliers offering eco-friendly products and materials.",
+    emoji: "🔗",
+    about: `
+      The Sustainable Supplier Network connects you with pre-vetted, eco-friendly suppliers worldwide.
+      Find suppliers for raw materials, components, or finished goods that align with your sustainability goals. 
+      Our platform ensures transparency, helping you create a robust, ethical supply chain.
+    `,
+    color: "#8e24aa",
+  },
+  {
+    id: "eco-dashboard",
+    title: "Customer-Facing EcoDashboard",
+    description: "Showcase your sustainability achievements to eco-conscious customers.",
+    emoji: "📊",
+    about: `
+      The EcoDashboard allows you to communicate your sustainability initiatives and achievements directly to your customers. 
+      Display metrics like carbon savings, recyclable packaging usage, and sustainable sourcing efforts in a visually engaging way. 
+      Strengthen brand loyalty by showing your commitment to a greener future.
+    `,
+    color: "#00bcd4",
+  },
 ];
 
-const App = () => {
-  const [activeModule, setActiveModule] = useState(null);
+function App() {
+  const [activeSection, setActiveSection] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPopupClosing, setIsPopupClosing] = useState(false);
+  const [appVisible, setAppVisible] = useState(false);
+  const [apiData, setApiData] = useState({}); // Store data from FastAPI
 
-  const openModule = (module) => {
-    setActiveModule(module);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAppVisible(true);
+      setIsLoading(false);
+    }, 2500); // 2.5 seconds for loading animation
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/data");
+      const result = await response.json();
+      setApiData(result); // Save data from FastAPI
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const closeModule = () => {
-    setActiveModule(null);
+  const handleNavClick = (section) => {
+    const sectionElement = document.getElementById(section.id);
+    sectionElement.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => setActiveSection(section), 500);
+  };
+
+  const handlePopupClose = () => {
+    setIsPopupClosing(true);
+    setTimeout(() => {
+      setIsPopupClosing(false);
+      setActiveSection(null);
+    }, 300); // Match the closing animation duration
   };
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>EcoDrive - Transforming <br/> E-commerce</h1>
-        <p>Empowering SMBs with sustainable solutions for a greener future.</p>
-      </header>
-
-      <div className="modules-container">
-        {modules.map((module) => (
-          <div key={module.id} className="module-card animated-card" onClick={() => openModule(module)}>
-            <div className="module-icon">{module.icon}</div>
-            <h2 className="module-title">{module.title}</h2>
-          </div>
-        ))}
-      </div>
-
-      {activeModule && (
-        <div className="modal-overlay" onClick={closeModule}>
-          <div className="modal animated-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModule}>
-              ✖
-            </button>
-            <img className="modal-img" src={activeModule.image} alt={activeModule.title} />
-            <h2 className="modal-title">{activeModule.title}</h2>
-            <p className="modal-details">{activeModule.details}</p>
-          </div>
+    <div className="app">
+      {isLoading && (
+        <div className="loading-screen">
+          <h1 className="animate-header">EcoDrive</h1>
+          <p className="animate-subtitle">Transforming E-commerce with Sustainable Solutions</p>
         </div>
       )}
+      <div className={`main-app ${appVisible ? "fade-in" : "hidden"}`}>
+        <header className="header">
+          <h1>EcoDrive</h1>
+          <p>Transforming E-commerce with Sustainable Solutions</p>
+        </header>
+        <nav className="navbar">
+          <ul>
+            {sections.map((section) => (
+              <li key={section.id}>
+                <button onClick={() => handleNavClick(section)}>{section.title}</button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <main className="main-content">
+          {sections.map((section) => (
+            <div
+              key={section.id}
+              className="section-box animate"
+              id={section.id}
+              onClick={() => setActiveSection(section)}
+            >
+              <div className="emoji">{section.emoji}</div>
+              <h2>{section.title}</h2>
+              <p>{section.description}</p>
+            </div>
+          ))}
+        </main>
+        <footer className="footer">
+          <p>&copy; 2024 EcoDrive. Empowering SMBs for a sustainable future.</p>
+        </footer>
+        {activeSection && (
+          <div className={`popup ${isPopupClosing ? "closing" : ""}`}>
+            <div className="popup-content animate-popup">
+              <button className="close-btn" onClick={handlePopupClose}>
+                ✕
+              </button>
+              <div className="popup-emoji">{activeSection.emoji}</div>
+              <h2>{activeSection.title}</h2>
+              <p>{activeSection.description}</p>
+              <p className="about-section">{activeSection.about}</p>
+              <p>
+                <strong>API Data:</strong>{" "}
+                {apiData[activeSection.id] || "Loading additional data..."}
+              </p>
+              <button
+                className="get-started-btn"
+                style={{ backgroundColor: activeSection.color }}
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
 
 export default App;
