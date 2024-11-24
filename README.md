@@ -139,10 +139,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-## **Contact**
-For inquiries, feedback, or collaborations:
-- **Author:** Rudra Srivastava
-- **Email:** your-email@example.com
 - **LinkedIn:** [Rudra Srivastava](https://linkedin.com/in/rudra-srivastava)
 
 ---
