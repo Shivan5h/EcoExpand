@@ -133,15 +133,3 @@ We welcome contributions! Follow these steps:
 5. Open a pull request.
 
 ---
-
-## **License**
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
-- **LinkedIn:** [Rudra Srivastava](https://linkedin.com/in/rudra-srivastava)
-
----
-```
-
-Replace placeholder URLs, API keys, and email addresses with your actual values.
