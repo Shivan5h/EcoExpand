@@ -38,7 +38,8 @@ EcoExpand follows a modular architecture:
 5. **Storage Layer:** MongoDB for structured data and Redis for caching.
 
 #Architecture Diagram
-(https://github.com/user-attachments/assets/9f4b9f12-e3f0-4dcf-a7b4-51b166ac13e8)
+![image](https://github.com/user-attachments/assets/5c64fb9f-8e8a-4b37-9f41-5c868e10d0ac)
+
 )
 
 ---
