@@ -37,10 +37,7 @@ EcoExpand follows a modular architecture:
 4. **Data Integration Layer:** API Gateway, data aggregation engine, and web scrapers to collect compliance data.
 5. **Storage Layer:** MongoDB for structured data and Redis for caching.
 
-#Architecture Diagram
 ![image](https://github.com/user-attachments/assets/5c64fb9f-8e8a-4b37-9f41-5c868e10d0ac)
-
-)
 
 ---
 
