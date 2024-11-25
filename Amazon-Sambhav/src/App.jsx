@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
+// import axios from 'axios';
+
+// const fetchData = async () => {
+//     try {
+//         const response = await axios.post('http://localhost:5173/your-endpoint', { key: 'value' });
+//         console.log(response.data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
+
+// fetchData();
+
+// const apiUrl = process.env.REACT_APP_API_URL;
 
 const sections = [
   {
@@ -83,11 +97,23 @@ function App() {
   const [appVisible, setAppVisible] = useState(false);
   const [apiData, setApiData] = useState({}); // Store data from FastAPI
 
+  const [input, setInput] = useState('');
+  const [result, setResult] = useState(null);
+
+  const handleSubmit = async () => {
+      try {
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}/predict`, { data: input });
+          setResult(response.data);
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setAppVisible(true);
       setIsLoading(false);
-    }, 2500); // 2.5 seconds for loading animation
+    }, 2500); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -116,7 +142,7 @@ function App() {
     setTimeout(() => {
       setIsPopupClosing(false);
       setActiveSection(null);
-    }, 300); // Match the closing animation duration
+    }, 300); 
   };
 
   return (
@@ -168,16 +194,23 @@ function App() {
               <h2>{activeSection.title}</h2>
               <p>{activeSection.description}</p>
               <p className="about-section">{activeSection.about}</p>
-              <p>
-                <strong>API Data:</strong>{" "}
-                {apiData[activeSection.id] || "Loading additional data..."}
-              </p>
-              <button
+              
+              {/* <button
                 className="get-started-btn"
                 style={{ backgroundColor: activeSection.color }}
               >
                 Get Started
-              </button>
+              </button> */}
+              <div>
+                <input
+                  type="text"
+                   value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                 placeholder="Enter data"
+               />
+                 <button onClick={handleSubmit}>Submit</button>
+                 {result && <div>Result: {result}</div>}
+             </div>
             </div>
           </div>
         )}
