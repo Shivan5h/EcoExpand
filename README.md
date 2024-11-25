@@ -20,6 +20,26 @@ EcoExpand is an AI-powered platform that simplifies cross-border regulatory comp
 - [Contact](#contact)
 
 ---
+## **AI Components**
+
+The AI components in EcoExpand include:
+
+### **Generative AI for NLP**
+- A fine-tuned GPT-based model powers a smart chatbot that helps users navigate complex regulations, answer compliance-related FAQs, and provide customized compliance checklists.
+- It enhances user interaction by offering real-time, context-aware responses.
+
+### **Natural Language Processing (NLP)**
+- Processes and analyzes regulatory text, extracting actionable insights from compliance data.
+- Automatically generates summaries of incentives, regulations, and export requirements.
+
+### **Knowledge Graphs**
+- AI organizes aggregated compliance data into a structured knowledge base, linking related information for accurate and reliable answers.
+
+### **Risk and Incentive Analysis Module**
+- Uses AI to analyze market risks and predict cost-saving opportunities, such as RoDTEP benefits and duty drawbacks, based on trends and geopolitical indicators.
+
+These components ensure streamlined decision-making for businesses by leveraging AI-driven automation and analysis.
+---
 
 ## **Features**
 - **Smart Chatbot:** AI-powered assistant to navigate regulations, answer FAQs, and offer compliance checklists.
